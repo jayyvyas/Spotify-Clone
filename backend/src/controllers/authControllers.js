@@ -160,7 +160,7 @@ async function loginUser(req, res) {
 	// setting cookie
 	res.cookie("token", token, {
 		httpOnly: true,
-		secure: false,
+		secure: true,
 		sameSite: "none",
 	});
 
