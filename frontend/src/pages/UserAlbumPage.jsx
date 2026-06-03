@@ -1,7 +1,7 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import Navbar from "./Navbar";
 import { Link } from "react-router-dom";
+import api from "../config/api";
 
 export default function UserAlbumPage() {
 	const [albums, setAlbums] = useState([]);
@@ -10,14 +10,7 @@ export default function UserAlbumPage() {
 	useEffect(() => {
 		async function fetchData() {
 			try {
-				const [userRes, albumsRes] = await Promise.all([
-					axios.get("http://localhost:3000/api/auth/me", {
-						withCredentials: true,
-					}),
-					axios.get("http://localhost:3000/api/albums/me", {
-						withCredentials: true,
-					}),
-				]);
+				const [userRes, albumsRes] = await Promise.all([api.get("/api/auth/me"), api.get("/api/albums/me")]);
 
 				setUser(userRes.data.user);
 				setAlbums(albumsRes.data.albums || []);

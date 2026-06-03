@@ -4,6 +4,7 @@ import { Play, Pause, SkipBack, SkipForward, Pencil, Trash2 } from "lucide-react
 import { useState, useRef, useEffect, useContext } from "react";
 import { Link, useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { UserContext } from "../contexts/UserContext";
+import api from "../config/api";
 
 export default function SongPlayerPage() {
 	const navigate = useNavigate();
@@ -61,7 +62,7 @@ export default function SongPlayerPage() {
 	useEffect(() => {
 		async function fetchSong() {
 			try {
-				const res = await axios.get(`http://localhost:3000/api/songs/${songId}?albumId=${albumId}`, {
+				const res = await api.get(`/api/songs/${songId}?albumId=${albumId}`, {
 					withCredentials: true,
 				});
 				const songRes = res.data?.song;

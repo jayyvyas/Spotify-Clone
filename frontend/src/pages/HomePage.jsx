@@ -1,7 +1,7 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Navbar from "./Navbar";
+import api from "../config/api";
 
 export default function HomePage() {
 	const [albums, setAlbums] = useState([]);
@@ -12,10 +12,7 @@ export default function HomePage() {
 	useEffect(() => {
 		async function fetchData() {
 			try {
-				const [albumsRes, songsRes] = await Promise.all([
-					axios.get("http://localhost:3000/api/albums"),
-					axios.get("http://localhost:3000/api/songs"),
-				]);
+				const [albumsRes, songsRes] = await Promise.all([api.get("/api/albums"), api.get("/api/songs")]);
 
 				setAlbums(albumsRes.data.albums || []);
 				setSongs(songsRes.data.songs || []);

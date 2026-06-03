@@ -1,7 +1,7 @@
 import { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
 import { UserContext } from "../contexts/UserContext";
+import api from "../config/api";
 
 export default function RegisterPage() {
 	const { setUser } = useContext(UserContext);
@@ -31,7 +31,7 @@ export default function RegisterPage() {
 		setLoading(true);
 
 		try {
-			const res = await axios.post("http://localhost:3000/api/auth/register", formData);
+			const res = await api.post("/api/auth/register", formData);
 
 			setUser(res.data.user);
 			navigate("/home");

@@ -14,6 +14,7 @@ const cookieParser = require("cookie-parser");
 
 // Connect to the database
 connectDB();
+app.set("trust proxy", 1);
 
 //global middlewares
 app.use(express.json());

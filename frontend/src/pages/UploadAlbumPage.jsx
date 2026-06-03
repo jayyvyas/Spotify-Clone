@@ -1,8 +1,8 @@
-import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "./Navbar";
 import { UserContext } from "../contexts/UserContext";
+import api from "../config/api";
 
 export default function UploadAlbumPage() {
 	const navigate = useNavigate();
@@ -36,7 +36,7 @@ export default function UploadAlbumPage() {
 			formData.append("title", title);
 			formData.append("albumCover", albumCover);
 
-			const res = await axios.post("http://localhost:3000/api/albums", formData, { withCredentials: true });
+			const res = await api.post("/api/albums", formData);
 
 			const albumId = res.data?.albumId;
 			if (!albumId) throw new Error("Album ID not found");

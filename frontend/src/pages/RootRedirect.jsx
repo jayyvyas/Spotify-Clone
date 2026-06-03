@@ -1,6 +1,6 @@
 import { useEffect } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import api from "../config/api";
 
 export default function RootRedirect() {
 	const navigate = useNavigate();
@@ -8,9 +8,7 @@ export default function RootRedirect() {
 	useEffect(() => {
 		async function checkAuth() {
 			try {
-				await axios.get("http://localhost:3000/api/auth/me", {
-					withCredentials: true,
-				});
+				await api.get("/api/auth/me");
 
 				// logged in
 				navigate("/home");

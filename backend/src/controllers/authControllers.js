@@ -159,7 +159,8 @@ async function loginUser(req, res) {
 	// setting cookie
 	res.cookie("token", token, {
 		httpOnly: true,
-		sameSite: "lax",
+		secure: false,
+		sameSite: "none",
 	});
 
 	return res.status(200).json({

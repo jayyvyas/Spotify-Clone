@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { Navigate, useLocation, useNavigate, useParams } from "react-router-dom";
+import api from "../config/api";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import Navbar from "./Navbar";
 
 export default function EditSongPage() {
@@ -25,9 +26,7 @@ export default function EditSongPage() {
 
 		const fetchSong = async () => {
 			try {
-				const res = await axios.get(`http://localhost:3000/api/songs/${id}?albumId=${albumId}`, {
-					withCredentials: true,
-				});
+				const res = await api.get(`/api/songs/${id}?albumId=${albumId}`);
 
 				const songRes = res.data.song;
 

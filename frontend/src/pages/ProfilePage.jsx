@@ -3,6 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Navbar from "./Navbar";
 import { UserContext } from "../contexts/UserContext";
+import api from "../config/api";
 
 export default function ProfilePage() {
 	const { user, setUser } = useContext(UserContext);
@@ -72,7 +73,7 @@ export default function ProfilePage() {
 
 	const handleDeleteAccount = async () => {
 		try {
-			await axios.delete("http://localhost:3000/api/auth/me", {
+			await api.delete("/api/auth/me", {
 				withCredentials: true,
 			});
 

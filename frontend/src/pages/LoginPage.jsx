@@ -1,7 +1,7 @@
 import { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
 import { UserContext } from "../contexts/UserContext";
+import api from "../config/api";
 
 export default function LoginPage() {
 	const [formData, setFormData] = useState({
@@ -28,7 +28,7 @@ export default function LoginPage() {
 		setLoading(true);
 
 		try {
-			const res = await axios.post("http://localhost:3000/api/auth/login", formData);
+			const res = await api.post("/api/auth/login", formData);
 
 			setUser(res.data.user);
 			navigate("/home");

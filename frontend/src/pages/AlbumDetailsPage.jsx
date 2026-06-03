@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../config/api";
 import { Link, useParams } from "react-router-dom";
 import Navbar from "./Navbar";
 import { Play } from "lucide-react";
@@ -16,9 +16,9 @@ export default function AlbumPage() {
 	useEffect(() => {
 		const fetchAlbumDetails = async () => {
 			try {
-				const albumRes = await axios.get(`http://localhost:3000/api/albums/${id}`);
-				const songsRes = await axios.get(`http://localhost:3000/api/albums/${id}/songs`);
-				const userRes = await axios.get("http://localhost:3000/api/auth/me");
+				const albumRes = await api.get(`/api/albums/${id}`);
+				const songsRes = await api.get(`/api/albums/${id}/songs`);
+				const userRes = await api.get(`/api/auth/me`);
 
 				setAlbum(albumRes.data.album);
 				setSongs(songsRes.data.songs || []);

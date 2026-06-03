@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import Navbar from "./Navbar";
+import api from "../config/api";
 
 export default function UploadSongPage() {
 	const { id: albumId } = useParams();
@@ -17,7 +17,7 @@ export default function UploadSongPage() {
 	useEffect(() => {
 		const fetchAlbum = async () => {
 			try {
-				const res = await axios.get(`http://localhost:3000/api/albums/${albumId}`, { withCredentials: true });
+				const res = await api.get(`/api/albums/${albumId}`);
 				setAlbum(res.data?.album);
 			} catch (err) {
 				console.log(err);
@@ -43,9 +43,7 @@ export default function UploadSongPage() {
 			formData.append("title", title);
 			formData.append("song", audioFile);
 
-			const res = await axios.post(`http://localhost:3000/api/albums/${albumId}/songs`, formData, {
-				withCredentials: true,
-			});
+			const res = await api.post(`/api/albums/${albumId}/songs`, formData);
 
 			if (!res.data?.createdSong?._id) throw new Error("Invalid response");
 

@@ -2,6 +2,7 @@ import { Link, useNavigate, NavLink } from "react-router-dom";
 import axios from "axios";
 import { useContext } from "react";
 import { UserContext } from "../contexts/UserContext";
+import api from "../config/api";
 
 function Navbar() {
 	const navigate = useNavigate();
@@ -20,7 +21,7 @@ function Navbar() {
 
 	const handleLogout = async () => {
 		try {
-			await axios.post("http://localhost:3000/api/auth/logout", {}, { withCredentials: true });
+			await api.post("/api/auth/logout", {}, { withCredentials: true });
 			navigate("/login");
 		} catch (err) {
 			console.log("Logout failed", err.response?.data?.message);

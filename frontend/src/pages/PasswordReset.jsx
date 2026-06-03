@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Navbar from "./Navbar";
-import axios from "axios";
+import api from "../config/api";
 
 export default function ResetPasswordPage() {
 	const [oldPassword, setOldPassword] = useState("");
@@ -22,7 +22,7 @@ export default function ResetPasswordPage() {
 		const data = { oldPassword, newPassword };
 
 		try {
-			const res = await axios.post("http://localhost:3000/api/auth/password", data, {
+			const res = await api.post("/api/auth/password", data, {
 				withCredentials: true,
 			});
 			setConfirmPassword("");
