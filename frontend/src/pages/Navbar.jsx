@@ -5,7 +5,6 @@ import api from "../config/api";
 
 function Navbar() {
 	const navigate = useNavigate();
-
 	const { user } = useContext(UserContext);
 
 	const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
@@ -28,73 +27,116 @@ function Navbar() {
 	};
 
 	return (
-		<div className="sticky top-0 z-10 bg-gradient-to-r from-black via-green-950/40 to-black backdrop-blur border-b border-white/5">
-			<div className="px-4 md:px-6 py-4 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-				{/* LEFT */}
-				<div className="flex gap-5 items-center">
-					<Link to="/">
-						<h1 className="text-2xl">
-							{getGreeting()}, <span className="text-green-500">{user?.name}</span>
+		<div className="sticky top-0 z-50 bg-zinc-950/70 backdrop-blur-xl border-b border-zinc-900/80 shadow-lg">
+			{/* Main Center Content Wrapper */}
+			<div className="max-w-6xl mx-auto px-4 sm:px-6 h-20 flex items-center justify-between gap-4">
+				{/* LEFT SIDE: Identity & Core Navigation */}
+				<div className="flex items-center gap-8 min-w-0">
+					<Link to="/" className="hover:opacity-90 transition active:scale-95 flex-shrink-0">
+						<h1 className="text-lg md:text-xl font-extrabold tracking-tight text-white truncate max-w-[160px] sm:max-w-xs">
+							{getGreeting()}, <span className="text-green-500">{user?.name?.toUpperCase()}</span>
 						</h1>
 					</Link>
 
+					{/* Desktop Navigation Links */}
 					{user?.role === "artist" && (
-						<>
-							<div className="h-8 w-px bg-white/30" />
+						<nav className="hidden md:flex items-center gap-1.5 self-stretch h-20">
 							<NavLink
 								to="/my-albums"
 								className={({ isActive }) =>
-									isActive ? "text-green-500 text-lg pt-2" : "text-white text-lg pt-2"
+									`text-xs font-bold uppercase tracking-wider relative flex items-center h-full px-2 transition-colors duration-200 group/nav ${
+										isActive ? "text-green-400" : "text-zinc-400 hover:text-white"
+									}`
 								}
 							>
-								My Albums
+								{({ isActive }) => (
+									<>
+										<span>My Albums</span>
+										{/* Dynamic underline bar for active state visualization */}
+										<div
+											className={`absolute bottom-0 left-0 right-0 h-[3px] bg-green-500 rounded-t-full transition-transform duration-200 ${
+												isActive ? "scale-x-100" : "scale-x-0 group-hover/nav:scale-x-50"
+											}`}
+										/>
+									</>
+								)}
 							</NavLink>
-						</>
+						</nav>
 					)}
 				</div>
 
-				{/* RIGHT */}
-				<div className="flex items-center gap-6">
+				{/* RIGHT SIDE: Interactive Actions & Account Management */}
+				<div className="flex items-center gap-4 flex-shrink-0">
 					{user?.role === "artist" && (
-						<>
-							<Link
-								to="/upload-album"
-								className="px-5 py-2 rounded-full bg-green-500 text-black   text-sm hover:bg-green-400 transition shadow-md"
-							>
-								Create Album
-							</Link>
-							<div className="h-8 w-px bg-white/30" />
-						</>
+						<Link
+							to="/upload-album"
+							className="px-4 py-2 rounded-full bg-green-500 hover:bg-green-400 text-black text-xs font-black tracking-wide uppercase active:scale-95 transition shadow-md shadow-green-500/10"
+						>
+							<span className="sm:hidden">Create</span>
+							<span className="hidden sm:inline">Create Album</span>
+						</Link>
 					)}
 
-					{/* USER BLOCK */}
-					<div className="relative group flex items-center gap-4 py-3">
-						<div className="text-right leading-tight">
-							<p className="text-sm font-medium text-white">{user?.name}</p>
-							<p className="text-xs text-zinc-400">{user?.role === "user" ? "User" : "Artist"}</p>
+					{/* ACCOUNT DROPDOWN INTERFACE COMPOSER */}
+					<div className="relative group flex items-center gap-3 py-2 cursor-pointer">
+						{/* Status Label Stack */}
+						<div className="hidden md:block text-right leading-none">
+							<p className="text-xs font-bold text-zinc-100 group-hover:text-green-400 transition-colors duration-200">
+								{user?.name}
+							</p>
+							<p className="text-[9px] uppercase font-black tracking-widest text-zinc-500 mt-1">
+								{user?.role === "user" ? "Listener" : "Artist"}
+							</p>
 						</div>
 
-						<Link to="/profile">
+						{/* Profile Image Trigger container */}
+						<div className="relative flex-shrink-0 group-hover:scale-102 transition duration-200">
 							<img
 								src={user?.profileImage?.url || fallback}
+								alt="Avatar"
 								onError={(e) => (e.currentTarget.src = fallback)}
-								className="w-11 h-11 rounded-full object-cover border border-white/10 hover:border-green-500 transition"
+								className="w-10 h-10 rounded-full object-cover border border-zinc-800 group-hover:border-green-500 transition-colors duration-300"
 							/>
-						</Link>
+							<div className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-green-500 border-2 border-zinc-950 rounded-full shadow-md" />
+						</div>
 
-						{/* DROPDOWN */}
-						<div className="absolute right-0 top-full w-44 bg-zinc-950 border border-white/10 rounded-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition shadow-xl overflow-hidden">
-							<div className="px-4 py-3 border-b border-white/10">
-								<p className="text-xs text-zinc-500">Signed in as</p>
-								<p className="text-sm text-white truncate">{user?.email || user?.name}</p>
+						{/* DROP-DOWN WINDOW ELEMENT */}
+						<div className="absolute right-0 top-[110%] w-52 bg-zinc-900/95 backdrop-blur-2xl border border-zinc-800/80 rounded-2xl opacity-0 invisible translate-y-2 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-300 shadow-[0_15px_35px_rgba(0,0,0,0.6)] overflow-hidden z-50">
+							{/* Profile Header Status metadata */}
+							<div className="px-4 py-3.5 bg-zinc-950/40 border-b border-zinc-800/60">
+								<p className="text-[9px] uppercase font-extrabold tracking-widest text-zinc-500">
+									Signed in as
+								</p>
+								<p className="text-xs font-bold text-zinc-200 truncate mt-1">
+									{user?.email || user?.name}
+								</p>
 							</div>
 
-							<button
-								onClick={handleLogout}
-								className="w-full text-left px-4 py-3 text-sm text-zinc-300 hover:bg-white/5 hover:text-red-400 transition"
-							>
-								Log out
-							</button>
+							{/* Dropdown Action list buttons */}
+							<div className="p-1.5 space-y-0.5">
+								<Link
+									to="/profile"
+									className="flex w-full items-center px-3 py-2.5 text-xs font-medium text-zinc-400 hover:text-white rounded-xl hover:bg-zinc-800/60 transition"
+								>
+									View Profile
+								</Link>
+
+								{user?.role === "artist" && (
+									<Link
+										to="/my-albums"
+										className="flex md:hidden w-full items-center px-3 py-2.5 text-xs font-medium text-zinc-400 hover:text-white rounded-xl hover:bg-zinc-800/60 transition"
+									>
+										My Albums
+									</Link>
+								)}
+
+								<button
+									onClick={handleLogout}
+									className="w-full flex items-center px-3 py-2.5 text-xs font-bold text-red-400/80 hover:text-red-400 rounded-xl hover:bg-red-500/5 transition mt-1"
+								>
+									Log out
+								</button>
+							</div>
 						</div>
 					</div>
 				</div>
