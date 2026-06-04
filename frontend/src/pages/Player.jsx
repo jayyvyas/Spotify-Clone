@@ -226,7 +226,7 @@ export default function SongPlayerPage() {
 										onClick={async () => {
 											try {
 												await api.delete(
-													`${import.meta.env.VITE_API_URL}/albums/${album._id}/songs/${song._id}`,
+													`${import.meta.env.VITE_API_URL}/api/albums/${album._id}/songs/${song._id}`,
 													{ withCredentials: true },
 												);
 												navigate(`/albums/${albumId}`);

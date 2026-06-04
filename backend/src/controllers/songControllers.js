@@ -13,7 +13,7 @@ async function fetchSongs(req, res) {
 		message: "Songs fetched",
 		songs,
 	});
-}
+} 
 
 //DELETE /api/albums/:id/songs/:songid
 async function deleteSong(req, res) {
