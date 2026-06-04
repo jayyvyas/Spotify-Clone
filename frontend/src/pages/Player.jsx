@@ -225,8 +225,8 @@ export default function SongPlayerPage() {
 									<button
 										onClick={async () => {
 											try {
-												await axios.delete(
-													`http://localhost:3000/api/albums/${album._id}/songs/${song._id}`,
+												await api.delete(
+													`${import.meta.env.VITE_API_URL}a/albums/${album._id}/songs/${song._id}`,
 													{ withCredentials: true },
 												);
 												navigate(`/albums/${albumId}`);
