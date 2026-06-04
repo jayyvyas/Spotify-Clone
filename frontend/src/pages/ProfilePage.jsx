@@ -57,7 +57,7 @@ export default function ProfilePage() {
 			data.append("email", formData.email);
 			if (imageFile) data.append("profileImage", imageFile);
 
-			const res = await api.patch("http://localhost:3000/api/auth/me", data, {
+			const res = await api.patch(`${import.meta.env.VITE_API_URL}/api/auth/me`, data, {
 				withCredentials: true,
 				headers: { "Content-Type": "multipart/form-data" },
 			});
