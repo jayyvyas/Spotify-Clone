@@ -18,7 +18,7 @@ app.set("trust proxy", 1);
 
 const allowedOrigins = [
 	"http://localhost:5173", // Keep this so you can still test on your computer
-	"https://spotify-clone-theta-flame.vercel.app", // Your live Vercel frontend URL
+	"https://spotify-clone-jayyvyas.vercel.app",
 ];
 
 //global middlewares
