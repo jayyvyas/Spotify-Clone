@@ -53,9 +53,13 @@ export default function EditSongPage() {
 		console.log("Form Submitted");
 		setLoading(true);
 		try {
-			const res = await axios.patch(`http://localhost:3000/api/songs/${id}/edit?albumId=${album._id}`, formdata, {
-				withCredentials: true,
-			});
+			const res = await axios.patch(
+				`${import.meta.env.VITE_API_URL}/api/songs/${id}/edit?albumId=${album._id}`,
+				formdata,
+				{
+					withCredentials: true,
+				},
+			);
 			setMessage(res.data?.message);
 			setTimeout(() => {
 				setMessage("");
