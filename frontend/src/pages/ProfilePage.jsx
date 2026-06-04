@@ -1,5 +1,4 @@
 import { useContext, useEffect, useState } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Navbar from "./Navbar";
 import { UserContext } from "../contexts/UserContext";
@@ -16,12 +15,12 @@ export default function ProfilePage() {
 
 	const navigate = useNavigate();
 
-	const fallback = "http://localhost:3000/images/default-avatar.webp";
+	const fallback = `${import.meta.env.VITE_API_URL}/images/default-avatar.webp`;
 
 	useEffect(() => {
 		const fetchUser = async () => {
 			try {
-				const res = await axios.get("http://localhost:3000/api/auth/me", {
+				const res = await api.get(`${import.meta.env.VITE_API_URL}/api/auth/me`, {
 					withCredentials: true,
 				});
 
@@ -58,7 +57,7 @@ export default function ProfilePage() {
 			data.append("email", formData.email);
 			if (imageFile) data.append("profileImage", imageFile);
 
-			const res = await axios.patch("http://localhost:3000/api/auth/me", data, {
+			const res = await api.patch("http://localhost:3000/api/auth/me", data, {
 				withCredentials: true,
 				headers: { "Content-Type": "multipart/form-data" },
 			});
