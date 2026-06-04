@@ -301,7 +301,8 @@ async function updateUser(req, res) {
 function logoutUser(req, res) {
 	res.clearCookie("token", {
 		httpOnly: true,
-		sameSite: "lax",
+		secure: true, // Add this
+		sameSite: "none", // Change "lax" to "none"
 	});
 
 	res.json({ message: "Logged out" });

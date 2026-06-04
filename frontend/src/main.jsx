@@ -15,6 +15,7 @@ import UserProvider from "./contexts/UserContext.jsx";
 import EditSongPage from "./pages/EditSongPage.jsx";
 import ResetPasswordPage from "./pages/PasswordReset.jsx";
 import SongPlayerPage from "./pages/Player.jsx";
+axios.defaults.withCredentials = true;
 
 const router = createBrowserRouter([
 	{ path: "/", element: <RootRedirect /> },

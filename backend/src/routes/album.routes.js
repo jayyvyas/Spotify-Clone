@@ -14,7 +14,7 @@ const { deleteSong } = require("../controllers/songControllers");
 const router = express.Router();
 
 //api: /api/albums
-router.get("/", fetchAlbums);
+router.get("/", authUser, fetchAlbums);
 router.get("/me", authUser, allowArtist, SendUserAlbums);
 router.get("/:id", fetchAlbumDetails);
 router.get("/:id/songs", fetchAlbumSongs);
