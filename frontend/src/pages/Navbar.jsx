@@ -1,5 +1,4 @@
 import { Link, useNavigate, NavLink } from "react-router-dom";
-import axios from "axios";
 import { useContext } from "react";
 import { UserContext } from "../contexts/UserContext";
 import api from "../config/api";
@@ -9,7 +8,7 @@ function Navbar() {
 
 	const { user } = useContext(UserContext);
 
-	const BASE_URL = "http://localhost:3000";
+	const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
 	const fallback = `${BASE_URL}/images/default-avatar.webp`;
 
 	function getGreeting() {
