@@ -16,6 +16,11 @@ const cookieParser = require("cookie-parser");
 connectDB();
 app.set("trust proxy", 1);
 
+const allowedOrigins = [
+	"http://localhost:5173", // Keep this so you can still test on your computer
+	"https://spotify-clone-theta-flame.vercel.app", // Your live Vercel frontend URL
+];
+
 //global middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -23,7 +28,7 @@ app.use(express.static("src/public"));
 app.use(cookieParser());
 app.use(
 	cors({
-		origin: "http://localhost:5173",
+		origin: allowedOrigins,
 		credentials: true,
 	}),
 );
